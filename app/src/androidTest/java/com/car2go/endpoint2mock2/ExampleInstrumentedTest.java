@@ -1,4 +1,4 @@
-package car2go.com.endpoint2mock2;
+package com.car2go.endpoint2mock2;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

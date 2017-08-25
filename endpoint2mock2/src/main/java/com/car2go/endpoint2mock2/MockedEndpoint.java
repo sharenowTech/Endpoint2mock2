@@ -1,4 +1,4 @@
-package car2go.com.endpoint2mock2;
+package com.car2go.endpoint2mock2;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;

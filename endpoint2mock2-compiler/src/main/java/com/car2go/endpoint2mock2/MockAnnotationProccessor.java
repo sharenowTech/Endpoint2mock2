@@ -1,4 +1,4 @@
-package car2go.com.endpoint2mock2;
+package com.car2go.endpoint2mock2;
 
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.CodeBlock;
@@ -76,7 +76,7 @@ public class MockAnnotationProccessor extends AbstractProcessor{
                     .addCode("return registry;\n")
                     .build();
 
-            TypeSpec mocksRegistry = TypeSpec.classBuilder("MocksRegistry")
+            TypeSpec FakeRegistry = TypeSpec.classBuilder("FakeRegistry")
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                     .addField(registryField)
                     .addStaticBlock(initializationBlockBuilder.build())
@@ -84,7 +84,7 @@ public class MockAnnotationProccessor extends AbstractProcessor{
                     .build();
 
             try {
-                JavaFile.builder("com.car2go.mock", mocksRegistry)
+                JavaFile.builder("com.car2go.mock", FakeRegistry)
                         .build()
                         .writeTo(processingEnv.getFiler());
             } catch (IOException e) {

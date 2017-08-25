@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="car2go.com.endpoint2mock2">
+    package="com.car2go.endpoint2mock2">
 
     <application
         android:allowBackup="true"
