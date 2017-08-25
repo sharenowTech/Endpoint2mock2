@@ -1,7 +1,19 @@
 apply plugin: 'java'
+apply plugin: 'maven'
+
+ext {
+    name = 'Endpoint2mock2 Compiler'
+    artifactId = 'endpoint2mock2-compiler'
+}
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':endpoint2mock2')
+
+    implementation 'com.google.auto.service:auto-service:1.0-rc2'
+    implementation 'com.squareup:javapoet:1.8.0'
+
+    // Needed to have an access to annotations
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
 }
 
 sourceCompatibility = "1.7"
