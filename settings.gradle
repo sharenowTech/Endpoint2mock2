@@ -1,0 +1,1 @@
+include ':app', ':endpoint2mock2', ':endpoint2mock2-compiler'
