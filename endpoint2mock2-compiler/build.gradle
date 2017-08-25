@@ -1,6 +1,9 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
 ext {
     name = 'Endpoint2mock2 Compiler'
     artifactId = 'endpoint2mock2-compiler'
@@ -15,6 +18,3 @@ dependencies {
     // Needed to have an access to annotations
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
 }
-
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"

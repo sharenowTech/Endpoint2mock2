@@ -1,8 +1,19 @@
 apply plugin: 'java'
+apply plugin: 'maven'
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
+ext {
+    name = 'Endpoint2mock2'
+    artifactId = 'endpoint2mock2'
 }
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+dependencies {
+    implementation 'com.squareup.okhttp3:okhttp:3.8.1'
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.8.9'
+}
+
+
