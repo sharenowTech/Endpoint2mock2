@@ -6,7 +6,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
 /**
- * Client which replaces base endpoint with another one forwards req.
+ * Client which replaces base endpoint with another one then forwards requests to real client.
  */
 public class ReplaceEndpointClient extends OkHttpClient {
     private final String newEndpoint;
