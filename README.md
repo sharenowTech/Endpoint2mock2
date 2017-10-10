@@ -40,17 +40,11 @@ Add `@MockedEndpoint` annotation to your Retrofit interface. For the sake of exa
 interface GithubApi {
 
     /**
-     * Will call mocked server if MockableClient is enabled.
+     * Will call mocked server if MockableClient is enabled, and call the real server when it is not enabled.
      */
     @MockedEndpoint
     @GET("/users/car2go/repos")
     fun getCompanyRepositories(): Single<List<Repository>>
-
-    /**
-     * This endpoint will not be mocked and requests will be sent to the real server.
-     */
-    @GET("/users/SherifMakhlouf/repos")
-    fun getUserRepositories(): Single<List<Repository>>
 
 }
 ```
@@ -61,7 +55,7 @@ Use `MockableClient` as client for your Retrofit builder.
 
 ```kotlin
      val client = MockableClient.baseUrl("http://${BuildConfig.BUILD_HOST_ADDRESS}")   // Assuming that you have something running at this URL
-                             .shouldMock(mockToggle.isChecked)
+                             .mockWhen { mockToggle.isChecked } // Default is true
                              .build()
 
      val githubApi = Retrofit.Builder()
