@@ -45,7 +45,9 @@ public class ReplaceEndpointClient extends OkHttpClient {
         }
 
         return url.newBuilder()
+                .scheme(newEndpointUrl.scheme())
                 .host(newEndpointUrl.host())
+                .port(newEndpointUrl.port())
                 .build()
                 .toString();
     }
