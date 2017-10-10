@@ -67,7 +67,7 @@ Use `MockableClient` as client for your Retrofit builder.
              .create(GithubApi::class.java)
 ```
 
-You can check [json-server](https://github.com/car2go/Endpoint2mock/tree/master/json-server) folder for an example of mock server.
+You can check [json-server](https://github.com/car2go/Endpoint2mock2/tree/master/json-server) folder for an example of mock server.
 
 And you are ready to go!
 
