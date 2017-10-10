@@ -1,6 +1,6 @@
 # Endpoint2mock2
 
-[![Build Status](https://travis-ci.org/car2go/Endpoint2mock.svg?branch=master)](https://travis-ci.org/car2go/Endpoint2mock)
+[![Build Status](https://api.travis-ci.org/car2go/Endpoint2mock2.svg?branch=master)](https://travis-ci.org/car2go/Endpoint2Mock2)
 
 Sometimes when working with REST APIs there is a need to return some mock data. Maybe for demo purposes, or real endpoint is just not ready yet. Endpoint2mock2 aims to help with that by integrating with Retrofit2 and allowing you to easily redirect some (but not all!) of your requests to your mock server.
 
