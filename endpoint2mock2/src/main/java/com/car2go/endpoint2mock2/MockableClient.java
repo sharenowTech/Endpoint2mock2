@@ -13,16 +13,16 @@ public class MockableClient extends OkHttpClient {
     private final Registry registry;
     private final OkHttpClient realClient;
     private final ReplaceEndpointClient mockedClient;
-    private final boolean shouldMock;
+    private final BooleanFunction mockWhenFunction;
 
     MockableClient(Registry registry,
                    OkHttpClient realClient,
                    ReplaceEndpointClient mockedClient,
-                   boolean shouldMock) {
+                   BooleanFunction mockWhenFunction) {
         this.registry = registry;
         this.realClient = realClient;
         this.mockedClient = mockedClient;
-        this.shouldMock = shouldMock;
+        this.mockWhenFunction = mockWhenFunction;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class MockableClient extends OkHttpClient {
     }
 
     private boolean shouldMockRequest(Request request) {
-        return registry.isInRegistry(request.url().toString()) && shouldMock;
+        return registry.isInRegistry(request.url().toString()) && mockWhenFunction.call();
     }
 
     /**
@@ -53,8 +53,9 @@ public class MockableClient extends OkHttpClient {
      */
     public static class Builder {
         private final String mockedBaseUrl;
+
         private OkHttpClient realClient;
-        private boolean shouldMock;
+        private BooleanFunction mockWhenFunction = BooleanFunction.TRUE;
 
         private Builder(String mockedBaseUrl) {
             this.mockedBaseUrl = mockedBaseUrl;
@@ -71,12 +72,15 @@ public class MockableClient extends OkHttpClient {
         /**
          * There might be cases when you do not always want to mock requests even if they are
          * annotated with {@link MockedEndpoint}. This method allows you to decide whether such
-         * requests should be mocked or not.
-         *
-         * @param shouldMock {@code true} if request should be mocked and {@code false} if it should not.
+         * requests should be mocked or not by providing function which will return `true` if
+         * request should be mocked and `false` if it should not.
+         * <p>
+         * Note, this function would be still called only for endpoints annotated with
+         * {@link BooleanFunction}.
          */
-        public Builder shouldMock(boolean shouldMock) {
-            this.shouldMock = shouldMock;
+        public Builder mockWhen(BooleanFunction function) {
+            this.mockWhenFunction = function;
+
             return this;
         }
 
@@ -92,7 +96,7 @@ public class MockableClient extends OkHttpClient {
                     new Registry(),
                     realClient,
                     new ReplaceEndpointClient(mockedBaseUrl, realClient),
-                    shouldMock
+                    mockWhenFunction
             );
         }
     }

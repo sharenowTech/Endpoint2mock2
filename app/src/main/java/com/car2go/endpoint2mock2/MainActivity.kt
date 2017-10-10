@@ -12,8 +12,6 @@ import rx.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var githubApi: GithubApi
-
     private var subscription: Subscription? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,10 +19,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val client = MockableClient.baseUrl("http://${BuildConfig.BUILD_HOST_ADDRESS}")   // Assuming that you have something running at this URL
-                .shouldMock(true)
+                .mockWhen { mockToggle.isChecked }
                 .build()
 
-        githubApi = Retrofit.Builder()
+        val githubApi = Retrofit.Builder()
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl("https://api.github.com")
