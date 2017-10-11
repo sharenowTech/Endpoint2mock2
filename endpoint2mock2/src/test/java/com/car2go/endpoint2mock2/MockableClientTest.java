@@ -1,5 +1,6 @@
 package com.car2go.endpoint2mock2;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -17,7 +18,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class MockableClientTest {
 
-    static final Request REQUEST =  new Request.Builder()
+    static final Request REQUEST = new Request.Builder()
             .url("http://example.com")
             .build();
 
@@ -27,14 +28,26 @@ public class MockableClientTest {
     OkHttpClient realClient;
     @Mock
     ReplaceEndpointClient mockClient;
+    @Mock
+    BooleanFunction lookupFunction;
 
     MockableClient testee;
 
 
+    @Before
+    public void setUp() throws Exception {
+        testee = new MockableClient(
+                registry,
+                realClient,
+                mockClient,
+                lookupFunction
+        );
+    }
+
     @Test
     public void notInRegistry_CallRealEndpoint() {
         // Given
-        givenShouldMock(true);
+        givenWhenFunctionReturns(true);
         givenEndpointInRegistry(false);
 
         // When
@@ -48,7 +61,7 @@ public class MockableClientTest {
     @Test
     public void inRegistryAndShouldMock_CallMockedEndpoint() {
         // Given
-        givenShouldMock(true);
+        givenWhenFunctionReturns(true);
         givenEndpointInRegistry(true);
 
         // When
@@ -62,7 +75,7 @@ public class MockableClientTest {
     @Test
     public void inRegistryButShouldNotMock_CallRealEndpoint() {
         // Given
-        givenShouldMock(true);
+        givenWhenFunctionReturns(true);
         givenEndpointInRegistry(false);
 
         // When
@@ -78,12 +91,8 @@ public class MockableClientTest {
                 .willReturn(result);
     }
 
-    private void givenShouldMock(boolean shouldMock) {
-        testee = new MockableClient(
-                registry,
-                realClient,
-                mockClient,
-                shouldMock
-        );
+    private void givenWhenFunctionReturns(boolean result) {
+        given(lookupFunction.call())
+                .willReturn(result);
     }
 }
