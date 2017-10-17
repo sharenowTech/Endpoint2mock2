@@ -27,13 +27,13 @@ repositories {
 Add dependencies.
 
 ```groovy
-compile 'com.github.car2go.Endpoint2mock2:endpoint2mock2:1.1.0'
+compile 'com.github.car2go.Endpoint2mock2:endpoint2mock2:1.0.0'
 
 // If you use Kotlin
-kapt 'com.github.car2go.Endpoint2mock2:endpoint2mock2-compiler:1.1.0'
+kapt 'com.github.car2go.Endpoint2mock2:endpoint2mock2-compiler:1.0.0'
 
 // If you do not use Kotlin
-annotationProcessor 'com.github.car2go.Endpoint2mock2:endpoint2mock2-compiler:1.1.0'
+annotationProcessor 'com.github.car2go.Endpoint2mock2:endpoint2mock2-compiler:1.0.0'
 ```
 
 ### Step three
