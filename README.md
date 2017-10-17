@@ -6,6 +6,10 @@ Sometimes when working with REST APIs there is a need to return some mock data. 
 
 Here is how it goes.
 
+## Retrofit 1
+
+This library is working only with Retrofit 2. For Retrofit 1 use the other version of the library: https://github.com/car2go/Endpoint2mock
+
 ## Add it to your project
 
 ### Step one
@@ -54,17 +58,17 @@ interface GithubApi {
 Use `MockableClient` as client for your Retrofit builder.
 
 ```kotlin
-     val client = MockableClient.baseUrl("http://${BuildConfig.BUILD_HOST_ADDRESS}")   // Assuming that you have something running at this URL
-                             .mockWhen { mockToggle.isChecked } // Default is true
-                             .build()
+ val client = MockableClient.baseUrl(mockServerUrl)   // Assuming that you have something running at this URL
+                         .mockWhen { mockToggle.isChecked } // Default is true
+                         .build()
 
-     val githubApi = Retrofit.Builder()
-             .client(client)
-             .baseUrl("https://api.github.com")
-             .addConverterFactory(GsonConverterFactory.create())
-             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-             .build()
-             .create(GithubApi::class.java)
+ val githubApi = Retrofit.Builder()
+         .client(client)
+         .baseUrl("https://api.github.com")
+         .addConverterFactory(GsonConverterFactory.create())
+         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+         .build()
+         .create(GithubApi::class.java)
 ```
 
 You can check [json-server](https://github.com/car2go/Endpoint2mock2/tree/master/json-server) folder for an example of mock server.
@@ -76,7 +80,7 @@ And you are ready to go!
 Just one line.
 
 ```
--keep class com.car2go.mock.MocksRegistry { *; }
+-keep class com.car2go.mock.FakeRegistry { *; }
 ```
 
 ## License
