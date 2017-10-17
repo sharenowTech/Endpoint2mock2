@@ -1,10 +1,14 @@
 # Endpoint2mock2
 
-[![Build Status](https://travis-ci.org/car2go/Endpoint2Mock2.svg?branch=master)](https://travis-ci.org/car2go/Endpoint2Mock2)
+[![Build Status](https://travis-ci.org/car2go/Endpoint2mock2.svg?branch=master)](https://travis-ci.org/car2go/Endpoint2mock2)
 
 Sometimes when working with REST APIs there is a need to return some mock data. Maybe for demo purposes, or real endpoint is just not ready yet. Endpoint2mock2 aims to help with that by integrating with Retrofit2 and allowing you to easily redirect some (but not all!) of your requests to your mock server.
 
 Here is how it goes.
+
+## Retrofit 1
+
+This library is working only with Retrofit 2. For Retrofit 1 use the other version of the library: https://github.com/car2go/Endpoint2mock
 
 ## Add it to your project
 
@@ -23,13 +27,13 @@ repositories {
 Add dependencies.
 
 ```groovy
-compile 'com.github.car2go.Endpoint2mock2:endpoint2mock2:1.1.0'
+compile 'com.github.car2go.Endpoint2mock2:endpoint2mock2:1.0.0'
 
 // If you use Kotlin
-kapt 'com.github.car2go.Endpoint2mock2:endpoint2mock2-compiler:1.1.0'
+kapt 'com.github.car2go.Endpoint2mock2:endpoint2mock2-compiler:1.0.0'
 
 // If you do not use Kotlin
-annotationProcessor 'com.github.car2go.Endpoint2mock2:endpoint2mock2-compiler:1.1.0'
+annotationProcessor 'com.github.car2go.Endpoint2mock2:endpoint2mock2-compiler:1.0.0'
 ```
 
 ### Step three
@@ -54,17 +58,17 @@ interface GithubApi {
 Use `MockableClient` as client for your Retrofit builder.
 
 ```kotlin
-     val client = MockableClient.baseUrl("http://${BuildConfig.BUILD_HOST_ADDRESS}")   // Assuming that you have something running at this URL
-                             .mockWhen { mockToggle.isChecked } // Default is true
-                             .build()
+ val client = MockableClient.baseUrl(mockServerUrl)   // Assuming that you have something running at this URL
+                         .mockWhen { mockToggle.isChecked } // Default is true
+                         .build()
 
-     val githubApi = Retrofit.Builder()
-             .client(client)
-             .baseUrl("https://api.github.com")
-             .addConverterFactory(GsonConverterFactory.create())
-             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-             .build()
-             .create(GithubApi::class.java)
+ val githubApi = Retrofit.Builder()
+         .client(client)
+         .baseUrl("https://api.github.com")
+         .addConverterFactory(GsonConverterFactory.create())
+         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+         .build()
+         .create(GithubApi::class.java)
 ```
 
 You can check [json-server](https://github.com/car2go/Endpoint2mock2/tree/master/json-server) folder for an example of mock server.
@@ -76,7 +80,7 @@ And you are ready to go!
 Just one line.
 
 ```
--keep class com.car2go.mock.MocksRegistry { *; }
+-keep class com.car2go.mock.FakeRegistry { *; }
 ```
 
 ## License
